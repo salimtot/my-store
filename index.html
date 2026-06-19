@@ -71,7 +71,7 @@
                 <img src="https://picsum.photos/300/200?random=${i}" alt="${p.name}">
                 <h3>${p.name}</h3>
                 <span class="price">${p.price} ريال</span>
-                <a href="https://wa.me/${MY_PHONE}?text=مرحبا، أريد طلب: ${p.name}" class="btn" target="_blank">اطلب عبر واتساب</a>
+                <a href="https://wa.me/${MY_PHONE}?text=${encodeURIComponent('مرحبا، أريد طلب: ' + p.name)}" class="btn" target="_blank">اطلب عبر واتساب</a>
             `;
             container.appendChild(card);
         });

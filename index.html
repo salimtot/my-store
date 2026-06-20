@@ -4,29 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر النخبة الفاخر | Luxury Store</title>
+
+    <meta name="google-site-verification" content="KmR_Y9LfwQPBFkNImqD_U6pB9QDIma5XMRIiKgCGUNA" />
+    <meta name="description" content="متجر النخبة الفاخر في سلطنة عمان - وجهتك الأولى لأرقى الساعات الملكية، العطور النادرة، التقنيات الحديثة، والإكسسوارات الشخصية الفاخرة مع طلب مباشر عبر الواتساب.">
+    <meta name="keywords" content="متجر النخبة, متجر النخبة الفاخر, تسوق إلكتروني عمان, ساعات ملكية مسقط, عطور نادرة, عطور نيش عمان, ايفون تيتانيوم, اكسسوارات فاخرة, هدايا رجالية فخمة, شراء عطور عمان, متجر واتساب">
+    <meta name="author" content="Luxury Store - متجر النخبة">
+    
+    <meta property="og:title" content="متجر النخبة الفاخر | Luxury Store">
+    <meta property="og:description" content="تجرّب أرقى معايير التسوق الرقمي. ساعات، عطور، وإلكترونيات فاخرة بأسعار حصرية.">
+    <meta property="og:image" content="https://picsum.photos/1200/630?random=100">
+    <meta property="og:type" content="website">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
-        
+
+        /* حركة الظهور التدريجي للمنتجات */
+        .card {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* تأثير لمعة الأزرار عند مرور الماوس */
+        .btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .btn:hover {
+            background: #fff;
+            box-shadow: 0 0 15px var(--purple);
+            transform: scale(1.05);
+        }
+
+        /* تأثير النبض لعنوان الموقع الأساسي */
+        header h1 {
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 5px var(--purple); }
+            50% { text-shadow: 0 0 20px var(--purple); }
+        }
+
+        /* لوحة الألوان الخاصة بمتجرك (الموجودة في صورتك) */
         :root {
             --purple: #6f42c1;
             --purple-dark: #4a148c;
             --purple-glow: rgba(111, 66, 193, 0.15);
-            --bg-main: #f8f9fa; /* الخلفية البيضاء الفخمة */
-            --card-bg: #ffffff; /* لون بطاقات المنتجات */
+            --bg-main: #f8f9fa; 
+            --card-bg: #ffffff; 
             --card-border: rgba(111, 66, 193, 0.12);
-            --text-main: #2b2b2b; /* نصوص داكنة واضحة على خلفية بيضاء */
+            --text-main: #2b2b2b; 
             --text-muted: #6c757d;
-            --accent-color: #d63384; /* لمسة لونية إضافية - الوردي الساحر للأسعار */
-            --lavender-bg: #f3e5f5; /* لون خلفية شارات التصنيف */
+            --accent-color: #d63384; 
+            --lavender-bg: #f3e5f5; 
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-        }
+        /* 💡 تنبيه: من هنا وتحت اترك بقية كود الـ CSS القديم حقك، وبقية كود الـ Body والمنتجات الأصليين بدون أي تغيير 💡 */
 
         body {
             background-color: var(--bg-main);

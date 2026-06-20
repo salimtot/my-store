@@ -164,3 +164,48 @@ header h1 {
 .card:hover img {
     transform: scale(1.1);
 }
+<style>
+    /* إضافة تنسيق للخيارات الجديدة */
+    .controls { margin-top: 10px; text-align: right; }
+    select, input { padding: 5px; border-radius: 5px; border: none; margin: 5px 0; width: 100%; }
+    .rating { color: #f1c40f; margin-bottom: 10px; cursor: pointer; }
+</style>
+
+<script>
+    const MY_PHONE = "96877273398"; 
+
+    products.forEach((p, i) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <img src="https://picsum.photos/300/200?random=${i}" alt="${p.name}">
+            <h3>${p.name}</h3>
+            <span class="price">${p.price} ريال</span>
+            
+            <div class="controls">
+                <label>اللون:</label>
+                <select id="color-${i}">
+                    <option>أسود</option><option>ذهبي</option><option>فضي</option>
+                </select>
+                
+                <label>الكمية:</label>
+                <input type="number" id="qty-${i}" value="1" min="1">
+                
+                <label>التقييم:</label>
+                <div class="rating" onclick="alert('شكراً لتقييمك!')">★★★★★</div>
+            </div>
+
+            <button class="btn" onclick="sendOrder(${i})">اطلب الآن</button>
+        `;
+        container.appendChild(card);
+    });
+
+    // دالة إرسال الطلب مع الخيارات
+    function sendOrder(i) {
+        const product = products[i];
+        const color = document.getElementById(`color-${i}`).value;
+        const qty = document.getElementById(`qty-${i}`).value;
+        const msg = `مرحبا، أريد طلب: ${product.name} | اللون: ${color} | الكمية: ${qty}`;
+        window.open(`https://wa.me/${MY_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+</script>

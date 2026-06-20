@@ -3,71 +3,484 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر النخبة - تسوق بالفخامة</title>
+    <title>متجر النخبة الفاخر | Luxury Store</title>
     <style>
-        :root { --gold: #d4af37; --bg: #050505; --card-bg: rgba(255, 255, 255, 0.05); }
-        body { background: var(--bg); color: white; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; }
+        /* إعدادات الخطوط والألوان الفخمة */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
         
-        /* تصميم الواجهة الفخمة */
-        header { padding: 50px 20px; text-align: center; background: linear-gradient(to bottom, #1a1a1a, #050505); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 40px; }
-        
-        .product-card { background: var(--card-bg); backdrop-filter: blur(10px); padding: 25px; border-radius: 20px; border: 1px solid #333; transition: 0.4s; }
-        .product-card:hover { transform: translateY(-10px); border-color: var(--gold); }
-        
-        .product-img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
-        .price { color: var(--gold); font-size: 1.5em; font-weight: bold; }
-        
-        .btn-order { background: var(--gold); border: none; padding: 15px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1.1em; margin-top: 15px; }
-        
-        /* إضافة تفاصيل تقنية (قسم الوصف) */
-        .details { font-size: 0.9em; color: #ccc; margin: 10px 0; line-height: 1.6; }
+        :root {
+            --gold: #d4af37;
+            --gold-hover: #b8962e;
+            --dark-bg: #080808;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* الهيدر والواجهة الرئيسية */
+        header {
+            position: relative;
+            padding: 80px 20px;
+            text-align: center;
+            background: radial-gradient(circle at top, #1a150d 0%, var(--dark-bg) 70%);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            animation: glow 3s infinite alternate;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* أدوات البحث والفلترة */
+        .controls-section {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .search-container {
+            width: 100%;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 15px 25px;
+            background: #121212;
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        /* شبكة المنتجات */
+        .products-grid {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* بطاقة المنتج المحترفة */
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .img-container {
+            width: 100%;
+            height: 220px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            background: #151515;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 15px;
+            min-height: 54px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .product-badge {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* خيارات التخصيص */
+        .product-options {
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option-group label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .option-group select, .option-group input {
+            background: #181818;
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            width: 120px;
+            font-size: 0.9rem;
+        }
+
+        .option-group select:focus, .option-group input:focus {
+            border-color: var(--gold);
+            outline: none;
+        }
+
+        /* زر الطلب الاحترافي */
+        .btn-whatsapp {
+            background: linear-gradient(135deg, var(--gold) 0%, #b8962e 100%);
+            color: #000;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-whatsapp:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* فوتر الموقع */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--card-border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* حركات الأنميشن */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
+            to { text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            .filter-tabs { gap: 8px; }
+            .tab-btn { padding: 8px 16px; font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>متجر النخبة | الفخامة بين يديك</h1>
-    <p>أرقى الساعات، العطور، والاكسسوارات</p>
-</header>
+    <header>
+        <h1>متجر النخبة الفاخر</h1>
+        <p>بوابتك الرقمية لأرقى الساعات، العطور، الإلكترونيات، والإكسسوارات الشخصية المصممة بعناية.</p>
+    </header>
 
-<div class="grid" id="main-shop"></div>
+    <section class="controls-section">
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="ابحث عن منتجك المفضل هنا..." oninput="filterProducts()">
+        </div>
+        
+        <div class="filter-tabs">
+            <button class="tab-btn active" onclick="switchCategory('all', this)">كل المنتجات</button>
+            <button class="tab-btn" onclick="switchCategory('watches', this)">الساعات الملكية</button>
+            <button class="tab-btn" onclick="switchCategory('perfumes', this)">العطور النادرة</button>
+            <button class="tab-btn" onclick="switchCategory('electronics', this)">التقنية الذكية</button>
+            <button class="tab-btn" onclick="switchCategory('accessories', this)">إكسسوارات فاخرة</button>
+        </div>
+    </section>
 
-<script>
-    // قاعدة بيانات المنتجات الموسعة
-    const storeItems = [
-        { name: "ساعة رولكس ذهبية", price: "4900", desc: "ساعة فاخرة بطلاء ذهبي عيار 24، مقاومة للماء والخدش." },
-        { name: "عطر النخبة الخاص", price: "450", desc: "تركيبة عطرية فرنسية حصرية تدوم لأكثر من 24 ساعة." },
-        { name: "نظارات شمسية كلاسيك", price: "900", desc: "تصميم إيطالي عصري مع حماية كاملة من الأشعة فوق البنفسجية." },
-        { name: "قلم فاخر", price: "250", desc: "قلم بتصميم ملكي، مثالي للهدايا الراقية والاجتماعات الهامة." }
-    ];
+    <main class="products-grid" id="products-wrapper"></main>
 
-    const shop = document.getElementById('main-shop');
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 | تم التطوير بكل فخر لمنصة متجر النخبة</p>
+    </footer>
 
-    storeItems.forEach((item, index) => {
-        shop.innerHTML += `
-            <div class="product-card">
-                <img src="https://picsum.photos/400/300?random=${index}" class="product-img">
-                <h2>${item.name}</h2>
-                <p class="details">${item.desc}</p>
-                <span class="price">${item.price} ريال</span>
-                <div style="margin-top:15px;">
-                    <select id="color-${index}">
-                        <option>ذهبي</option><option>أسود</option><option>فضي</option>
-                    </select>
-                </div>
-                <button class="btn-order" onclick="sendWhatsApp(${index})">إتمام الطلب عبر الواتساب</button>
-            </div>
-        `;
-    });
+    <script>
+        const MY_PHONE = "96877273398";
+        let currentCategory = "all";
 
-    function sendWhatsApp(i) {
-        const item = storeItems[i];
-        const color = document.getElementById(`color-${i}`).value;
-        const phone = "96877273398";
-        window.location.href = `https://wa.me/${phone}?text=أريد طلب: ${item.name} - اللون: ${color}`;
-    }
-</script>
+        // قاعدة بيانات ضخمة تحتوي على أكثر من 30 منتجاً احترافياً مقسماً بدقة
+        const productsDatabase = [
+            // --- فئة الساعات (8 منتجات) ---
+            { id: 1, category: "watches", name: "رولكس سابمارينر كلاسيك", price: 5400, desc: "ساعة الغوص الأيقونية بطلاء فولاذي مقاوم للصدأ وإطار سيراميك فاخر.", colors: ["فضي", "أسود", "أخضر"], img: "1" },
+            { id: 2, category: "watches", name: "أوديمار بياجيه رويال أوك", price: 12500, desc: "تصميم ثماني الأضلاع أسطوري مع سوار متكامل وهيكل فولاذي نقي.", colors: ["فضي", "ذهبي"], img: "2" },
+            { id: 3, category: "watches", name: "باتيك فيليب نوتيلوس", price: 15800, desc: "قمة الفخامة السويسرية، ميناء أزرق دافئ وتصميم انسيابي مذهل.", colors: ["فضي", "وردي ذهبي"], img: "3" },
+            { id: 4, category: "watches", name: "أوميغا سبيدماستر الاحترافية", price: 4200, desc: "ساعة ميكانيكية عريقة معتمدة لرحلات الفضاء والمغامرات الطويلة.", colors: ["أسود", "فضي"], img: "4" },
+            { id: 5, category: "watches", name: "كارتير سانتوس دي كارتير", price: 6100, desc: "تصميم مربع كلاسيكي يجمع بين الطابع الرياضي والأناقة الرسمية.", colors: ["فضي", "ذهبي بركاني"], img: "5" },
+            { id: 6, category: "watches", name: "تاج هوير موناكو كرونوغراف", price: 3900, desc: "ساعة سباقات كلاسيكية بميناء مربع فريد وحركة أوتوماتيكية دقيقة.", colors: ["أزرق", "أسود"], img: "6" },
+            { id: 7, category: "watches", name: "تيسوت كرونو رقمية", price: 1200, desc: "مزيج فاخر بين اللمسة العصرية الرياضية وشاشات اللمس الذكية المتطورة.", colors: ["أسود نفاث", "فضي"], img: "7" },
+            { id: 8, category: "watches", name: "سيكو بروسبيكس الغواص", price: 1800, desc: "ساعة عملية ذات قوة تحمل خارقة وميناء مظلم يضيء في الأعماق.", colors: ["أزرق داكن", "أسود"], img: "8" },
 
+            // --- فئة العطور (8 منتجات) ---
+            { id: 9, category: "perfumes", name: "كريد أفينتوس الملكي", price: 450, desc: "مزيج ساحر من الأناناس والأخشاب الفاخرة للرجل الواثق القيادي.", colors: ["شفاف كلاسيكي"], img: "9" },
+            { id: 10, category: "perfumes", name: "ديور سواج بارفيوم", price: 380, desc: "رائحة غامضة غنية بلمسات برغموت كالابريا والأخشاب المدخنة اللطيفة.", colors: ["أزرق ليلي"], img: "10" },
+            { id: 11, category: "perfumes", name: "بلو دي شانيل مركّز", price: 410, desc: "عطر خشبي أروماتك يعبر عن الحرية المطلقة بتوليفة فريدة لا تُنسى.", colors: ["كحلي فخم"], img: "11" },
+            { id: 12, category: "perfumes", name: "توم فورد توباكو فانيلا", price: 520, desc: "عطر دافئ شرقي يمزج بين أوراق التبغ الفاخرة وحلاوة الفانيلا النقية.", colors: ["بني ملكي"], img: "12" },
+            { id: 13, category: "perfumes", name: "أمويدج إيبك العماني", price: 490, desc: "توليفة شرقية مهيبة من اللبان والمطاط والتوابل النادرة بنفحات عربية.", colors: ["أخضر زمردي"], img: "13" },
+            { id: 14, category: "perfumes", name: "جورجيو أرماني بريفيه عود", price: 580, desc: "سحر الشرق في زجاجة، يعتمد على أنقى خلاصة عود مع الورد الدمشقي.", colors: ["أسود داكن"], img: "14" },
+            { id: 15, category: "perfumes", name: "إيف سان لوران واي", price: 360, desc: "عطر منعش وقوي يجمع بين الميرمية والزنجبيل لإطلالة يومية مبهرة.", colors: ["أزرق نقي"], img: "15" },
+            { id: 16, category: "perfumes", name: "باكو رابان 1 مليون", price: 320, desc: "رائحة جريئة وجذابة تعتمد على القرفة والجلود الفاخرة في قالب ذهبي.", colors: ["ذهبي براق"], img: "16" },
+
+            // --- فئة الإلكترونيات (8 منتجات) ---
+            { id: 17, category: "electronics", name: "آيفون 15 برو ماكس", price: 4800, desc: "هيكل متين من التيتانيوم الخفيف مع كاميرات احترافية ومعالج فائق القوة.", colors: ["تيتانيوم طبيعي", "أسود", "أزرق"], img: "17" },
+            { id: 18, category: "electronics", name: "سامسونج جالكسي S24 أولترا", price: 4300, desc: "شاشة جبارة ومسطحة تماماً مع قلم S-Pen مدمج وميزات الذكاء الاصطناعي.", colors: ["رمادي تيتانيوم", "بنفسجي"], img: "18" },
+            { id: 19, category: "electronics", name: "سماعات آبل آيربودز ماكس", price: 2100, desc: "صوت عالي الدقة محيطي مع ميزة إلغاء الضجيج النشط الفائقة وراحة تامة.", colors: ["رمادي فلكي", "فضي", "أزرق"], img: "19" },
+            { id: 20, category: "electronics", name: "سوني WH-1000XM5", price: 1150, desc: "رائدة سماعات الرأس اللاسلكية لإلغاء الصوت الخارجي مع بطارية تدوم 30 ساعة.", colors: ["أسود مطفي", "بيج"], img: "20" },
+            { id: 21, category: "electronics", name: "آيباد برو M4 الجديد", price: 5200, desc: "شاشة شاشات أوليد مزدوجة مذهلة مع نحافة قياسية ومعالج اللاب توب الطائر.", colors: ["فضي ساطع", "أسود فلكي"], img: "21" },
+            { id: 22, category: "electronics", name: "لوحة مفاتيح ميكانيكية مخصصة", price: 650, desc: "أزرار ميكانيكية ناعمة مع إضاءة RGB كاملة وهيكل ألمنيوم ثقيل للمحترفين.", colors: ["رمادي داكن", "أبيض ثلجي"], img: "22" },
+            { id: 23, category: "electronics", name: "ماوس الألعاب اللاسلكي الفائق", price: 480, desc: "مستشعر بدقة عالية جداً ووزن خفيف للغاية يمنحك سرعة استجابة مذهلة.", colors: ["أسود", "أبيض"], img: "23" },
+            { id: 24, category: "electronics", name: "قاعدة شحن لاسلكي مغناطيسي", price: 250, desc: "شحن سريع متوافق مع تقنيات MagSafe لشحن 3 أجهزة في وقت واحد بأمان.", colors: ["أسود مخملي"], img: "24" },
+
+            // --- فئة الإكسسوارات (8 منتجات) ---
+            { id: 25, category: "accessories", name: "نظارات راي بان كلاسيك", price: 750, desc: "النظارة الأشهر عالمياً بإطار ذهبي أنيق وعدسات خضراء تحمي العين.", colors: ["إطار ذهبي", "إطار أسود"], img: "25" },
+            { id: 26, category: "accessories", name: "قلم مون بلان مايسترشوك", price: 1400, desc: "رمز الفخامة والكتابة الراقية، مطلي بالذهب ومصنوع من الراتنج الثمين.", colors: ["أسود مع ذهبي", "أسود مع فضي"], img: "26" },
+            { id: 27, category: "accessories", name: "محفظة جلدية من غوتشي", price: 1100, desc: "جلد طبيعي فاخر بنقوش بارزة ومساحات واسعة للبطاقات والنقود الشخصية.", colors: ["أسود ملكي", "بني كلاسيك"], img: "27" },
+            { id: 28, category: "accessories", name: "أزرار أكمام فرزاتشي", price: 850, desc: "إضافة ملكية لقميصك تحمل شعار ميدوسا الشهير بلمسة ذهبية ساطعة.", colors: ["ذهبي ناصع"], img: "28" },
+            { id: 29, category: "accessories", name: "حقيبة سفر جلدية لويس فيتون", price: 3200, desc: "حقيبة يد مخصصة للسفر القصير والمناسبات الفخمة من أجود خامات الجلد.", colors: ["بني مونوغرام"], img: "29" },
+            { id: 30, category: "accessories", name: "حزام جلد فاخر هيرميس", price: 1950, desc: "حزام بإبزيم مطلي بالذهب على شكل حرف H الشهير، يتماشى مع أرقى الأزياء.", colors: ["أسود", "بني جملي"], img: "30" },
+            { id: 31, category: "accessories", name: "رابطة عنق من الحرير الطبيعي", price: 350, desc: "مصنوعة 100% من الحرير الإيطالي الصافي بتطريزات هندسية بالغة الدقة.", colors: ["كحلي", "عنابي غامق"], img: "31" },
+            { id: 32, category: "accessories", name: "شاحن بطاقات ذكي ألمنيوم", price: 180, desc: "محفظة ألمنيوم تحمي بطاقاتك البنكية من السرقة اللاسلكية بنظام دفع تلقائي.", colors: ["رمادي ميتاليك", "أسود الكربون"], img: "32" }
+        ];
+
+        // دالة لعرض وتوليد المنتجات في الصفحة بشكل ديناميكي واحترافي
+        function renderStore(itemsList) {
+            const wrapper = document.getElementById('products-wrapper');
+            wrapper.innerHTML = ""; // تصفية الساحة قبل البناء
+
+            if(itemsList.length === 0) {
+                wrapper.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--text-muted); padding:40px;">لم يتم العثور على أي منتج يطابق بحثك.</p>`;
+                return;
+            }
+
+            itemsList.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                // توليد قائمة الألوان للمنتج الحالي
+                let colorOptions = '';
+                item.colors.forEach(color => {
+                    colorOptions += `<option value="${color}">${color}</option>`;
+                });
+
+                card.innerHTML = `
+                    <div>
+                        <div class="img-container">
+                            <img src="https://picsum.photos/400/320?random=${item.id}" alt="${item.name}">
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-badge">${getCategoryName(item.category)}</span>
+                            <span class="product-price">${item.price} ر.ع</span>
+                        </div>
+                        <h2 class="product-title">${item.name}</h2>
+                        <p class="product-desc">${item.desc}</p>
+                    </div>
+                    
+                    <div>
+                        <div class="product-options">
+                            <div class="option-group">
+                                <label>اللون المختبر:</label>
+                                <select id="color-select-${item.id}">${colorOptions}</select>
+                            </div>
+                            <div class="option-group">
+                                <label>الكمية المطلوبة:</label>
+                                <input type="number" id="qty-input-${item.id}" value="1" min="1">
+                            </div>
+                        </div>
+                        <button class="btn-whatsapp" onclick="processOrder(${item.id})">
+                            طلب عبر الواتساب الفوري
+                        </button>
+                    </div>
+                `;
+                wrapper.appendChild(card);
+            });
+        }
+
+        // دالة تحويل الاسم البرمجي للفئة إلى اسم عربي فخم
+        function getCategoryName(cat) {
+            switch(cat) {
+                case 'watches': return 'ساعات ملكية';
+                case 'perfumes': return 'عطور نادرة';
+                case 'electronics': return 'تقنية ذكية';
+                case 'accessories': return 'إكسسوارات';
+                default: return 'عام';
+            }
+        }
+
+        // دالة الانتقال والتبديل بين الفئات الرئيسية
+        function switchCategory(category, buttonElement) {
+            currentCategory = category;
+            
+            // تحديث تصميم الأزرار النشطة
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+            
+            filterProducts();
+        }
+
+        // دالة البحث والفلترة المشتركة (تجمع بين البحث النصي واختيار الفئة)
+        function filterProducts() {
+            const searchKeyword = document.getElementById('search-bar').value.toLowerCase().trim();
+            
+            const filtered = productsDatabase.filter(product => {
+                const matchesCategory = (currentCategory === "all" || product.category === currentCategory);
+                const matchesSearch = product.name.toLowerCase().includes(searchKeyword) || product.desc.toLowerCase().includes(searchKeyword);
+                return matchesCategory && matchesSearch;
+            });
+
+            renderStore(filtered);
+        }
+
+        // دالة معالجة الطلب وبناء الرسالة النصية للواتساب
+        function processOrder(id) {
+            const product = productsDatabase.find(p => p.id === id);
+            if(!product) return;
+
+            const selectedColor = document.getElementById(`color-select-${id}`).value;
+            const selectedQty = parseInt(document.getElementById(`qty-input-${id}`).value) || 1;
+            const totalPrice = product.price * selectedQty;
+
+            // بناء نص الرسالة بأسطر منسقة لتبدو كفاتورة شراء حقيقية
+            const baseMessage = `*طلب شراء جديد من متجر النخبة*%0A` +
+                                `---------------------------------%0A` +
+                                `• *المنتج:* ${product.name}%0A` +
+                                `• *الفئة:* ${getCategoryName(product.category)}%0A` +
+                                `• *اللون المختار:* ${selectedColor}%0A` +
+                                `• *الكمية:* ${selectedQty} قطعة%0A` +
+                                `---------------------------------%0A` +
+                                `• *إجمالي السعر:* ${totalPrice} ريال عماني%0A%0A` +
+                                `أرجو تأكيد الطلب وبدء إجراءات الشحن والتوصيل.`;
+
+            const whatsappUrl = `https://wa.me/${MY_PHONE}?text=${baseMessage}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // تشغيل المتجر وعرض المنتجات لأول مرة بمجرد تحميل الصفحة
+        window.onload = () => {
+            renderStore(productsDatabase);
+        };
+    </script>
 </body>
 </html>

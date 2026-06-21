@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر النخبة الفاخر | Luxury Store</title>
 
     <meta name="google-site-verification" content="KmR_Y9LfwQPBFkNImqD_U6pB9QDIma5XMRIiKgCGUNA" />
@@ -17,8 +18,34 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+    
+        <style>
+    /* يضمن أن الصور لا تخرج عن إطار الجوال */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* تنسيق سلة الشراء لتكون مناسبة للجوال */
+    .cart-container {
+        width: 95%;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+    /* يجعل الأزرار كبيرة وسهلة للضغط في الجوال */
+    button {
+        padding: 15px 20px;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* لضمان عدم وجود مساحات زائدة (Horizontal Scroll) */
+    body {
+        overflow-x: hidden;
+    }
+</style>
 
         /* حركة الظهور التدريجي للمنتجات */
         .card {
